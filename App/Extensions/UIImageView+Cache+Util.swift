@@ -8,7 +8,6 @@
 
 import UIKit
 
-let imageDataCache = NSCache<AnyObject, UIImage>()
 
 extension UIImageView {
     
@@ -20,6 +19,7 @@ extension UIImageView {
             return
         }
         
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             if let `error` = error {
@@ -27,7 +27,7 @@ extension UIImageView {
                 return
             } else {
                 log_success(message: response.debugDescription)
-                DispatchQueue.global(qos: .background).sync {
+                DispatchQueue.global(qos: .utility).sync {
                     if let `data` = data, let downloadedImage = UIImage(data: data) {
                         imageDataCache.setObject(invert ? downloadedImage.inverted() : downloadedImage, forKey: url.absoluteString as AnyObject)
                     }

@@ -9,11 +9,16 @@
 import UIKit
 import CoreData
 
+let imageDataCache = NSCache<AnyObject, UIImage>()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Set image cache limit
+        imageDataCache.countLimit = 75 // (75 images)
+        imageDataCache.totalCostLimit = 50 * 1024 * 1024 // (50 MB)
+
         return true
     }
 
