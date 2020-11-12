@@ -13,9 +13,12 @@ import Network
 class UsersListViewController: UIViewController {
     
     private var userViewModel: UserViewModel!
-    private var dataSource : UserTableViewDataSource<UserTableViewCell, User>!
+    private var dataSource : UserTableViewDataSource!
     @IBOutlet var userTableView: UITableView!
     let connectivityMonitor = NWPathMonitor()
+    
+    private var isLoading: Bool = false;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +26,10 @@ class UsersListViewController: UIViewController {
         userTableView.separatorStyle = .none
         
         // MARK: Register UITableViewCell
-        userTableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
+        userTableView.register(LoadingTableViewCell.self, forCellReuseIdentifier: LoadingTableViewCell.identifier())
+        userTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.identifier())
+        userTableView.register(InvertedTableViewCell.self, forCellReuseIdentifier: InvertedTableViewCell.identifier())
+        userTableView.register(StandardTableViewCell.self, forCellReuseIdentifier: StandardTableViewCell.identifier())
         
         // MARK: Initialize view model
         self.userViewModel = UserViewModel(service: APIService(), persistence: UserStorageManger(container: CoreDataStorage.shared.persistentContainer))
@@ -53,24 +59,8 @@ class UsersListViewController: UIViewController {
     }
     
     func renderList() {
-        self.dataSource = UserTableViewDataSource(cellIdentifier: UserTableViewCell.identifier, items: self.userViewModel.userList, configureCell: { [weak self] (cell, userdetails, row) in
-            guard let _ = self else {
-                return
-            }
-            cell.usernameLabel.text = userdetails.login
-            
-            if let avatarURL = userdetails.avatarURL {
-                cell.avatarImageView.downloadAndCacheImage(url: avatarURL, invert: row % 4 == 3)
-            }
-            
-            if let userURL = userdetails.url {
-                cell.detailsLabel.text = String(describing: userURL)
-            }
-            
-        })
-        
+        self.dataSource = UserTableViewDataSource(items: userViewModel.userList)
     }
-    
 }
 
 extension UsersListViewController: UserViewModelDelegate {
@@ -88,6 +78,7 @@ extension UsersListViewController: UserViewModelDelegate {
         self.renderList()
         // Reload data on main thread
         DispatchQueue.main.async {
+            self.isLoading = false
             // MARK: add datasource
             self.userTableView.dataSource = self.dataSource
             self.userTableView.delegate = self
@@ -98,12 +89,37 @@ extension UsersListViewController: UserViewModelDelegate {
 
 extension UsersListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 78
+        return  78
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // MARK: this will turn on `masksToBounds` just before showing the cell
-        cell.contentView.layer.masksToBounds = true
+        if indexPath.section == 1 {
+            cell.contentView.layer.masksToBounds = true
+        }
     }
     
 }
+
+
+extension UsersListViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading {
+            if !isLoading {
+                isLoading = true
+                DispatchQueue.global().async {
+                    // Fake background loading task for 1 seconds
+                    sleep(2)
+                    // Download more data here
+                    self.userViewModel.requestUserListFromServer()
+                }
+            }
+        }
+        
+    }
+}
+

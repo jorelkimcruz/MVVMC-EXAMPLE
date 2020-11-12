@@ -22,8 +22,11 @@
 		C447C92E2557166200E2E780 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C447C92C2557166100E2E780 /* User+CoreDataProperties.swift */; };
 		C447C930255726F700E2E780 /* Network+Connectivity+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C447C92F255726F700E2E780 /* Network+Connectivity+Util.swift */; };
 		C44DEFDE2559E73E003E328F /* UIImageView+Cache+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DEFDD2559E73E003E328F /* UIImageView+Cache+Util.swift */; };
-		C44DEFE02559EC98003E328F /* UIImageView+Invert+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DEFDF2559EC98003E328F /* UIImageView+Invert+Util.swift */; };
+		C44DEFE02559EC98003E328F /* UIImage+Invert+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DEFDF2559EC98003E328F /* UIImage+Invert+Util.swift */; };
+		C4958509255D707B006DE80F /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4958508255D707B006DE80F /* LoadingTableViewCell.swift */; };
 		C4A9BDC4255429EB000090B7 /* UserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A9BDC3255429EB000090B7 /* UserViewModelTests.swift */; };
+		C4E6D2A6255BF0270037834B /* UIView+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E6D2A5255BF0270037834B /* UIView+Util.swift */; };
+		C4E6D2A8255C32380037834B /* GenericTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E6D2A7255C32380037834B /* GenericTableViewCell.swift */; };
 		C4FB2D372553E1EA005A16F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D362553E1EA005A16F4 /* AppDelegate.swift */; };
 		C4FB2D392553E1EA005A16F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D382553E1EA005A16F4 /* SceneDelegate.swift */; };
 		C4FB2D3E2553E1EA005A16F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4FB2D3C2553E1EA005A16F4 /* Main.storyboard */; };
@@ -34,8 +37,10 @@
 		C4FB2D642553E3C3005A16F4 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D632553E3C3005A16F4 /* UserViewModel.swift */; };
 		C4FB2D662553E435005A16F4 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D652553E435005A16F4 /* APIService.swift */; };
 		C4FB2D6B2553FC22005A16F4 /* UserTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D6A2553FC22005A16F4 /* UserTableViewDataSource.swift */; };
-		C4FB2D6D2553FC6F005A16F4 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D6C2553FC6F005A16F4 /* UserTableViewCell.swift */; };
+		C4FB2D6D2553FC6F005A16F4 /* StandardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D6C2553FC6F005A16F4 /* StandardTableViewCell.swift */; };
 		C4FB2D70255405B7005A16F4 /* BetterLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D6F255405B7005A16F4 /* BetterLogs.swift */; };
+		C4FEF687255BEAF100C78FA1 /* InvertedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FEF686255BEAF100C78FA1 /* InvertedTableViewCell.swift */; };
+		C4FEF689255BEAFC00C78FA1 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FEF688255BEAFC00C78FA1 /* NoteTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,8 +72,11 @@
 		C447C92C2557166100E2E780 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "/Users/mac-home/Documents/Workspace/App/App/Models/User+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		C447C92F255726F700E2E780 /* Network+Connectivity+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network+Connectivity+Util.swift"; sourceTree = "<group>"; };
 		C44DEFDD2559E73E003E328F /* UIImageView+Cache+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Cache+Util.swift"; sourceTree = "<group>"; };
-		C44DEFDF2559EC98003E328F /* UIImageView+Invert+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Invert+Util.swift"; sourceTree = "<group>"; };
+		C44DEFDF2559EC98003E328F /* UIImage+Invert+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Invert+Util.swift"; sourceTree = "<group>"; };
+		C4958508255D707B006DE80F /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		C4A9BDC3255429EB000090B7 /* UserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModelTests.swift; sourceTree = "<group>"; };
+		C4E6D2A5255BF0270037834B /* UIView+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Util.swift"; sourceTree = "<group>"; };
+		C4E6D2A7255C32380037834B /* GenericTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableViewCell.swift; sourceTree = "<group>"; };
 		C4FB2D332553E1EA005A16F4 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4FB2D362553E1EA005A16F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4FB2D382553E1EA005A16F4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,8 +91,10 @@
 		C4FB2D632553E3C3005A16F4 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		C4FB2D652553E435005A16F4 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		C4FB2D6A2553FC22005A16F4 /* UserTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewDataSource.swift; sourceTree = "<group>"; };
-		C4FB2D6C2553FC6F005A16F4 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		C4FB2D6C2553FC6F005A16F4 /* StandardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardTableViewCell.swift; sourceTree = "<group>"; };
 		C4FB2D6F255405B7005A16F4 /* BetterLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterLogs.swift; sourceTree = "<group>"; };
+		C4FEF686255BEAF100C78FA1 /* InvertedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvertedTableViewCell.swift; sourceTree = "<group>"; };
+		C4FEF688255BEAFC00C78FA1 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,9 +276,9 @@
 		C4FB2D692553FBF5005A16F4 /* User list */ = {
 			isa = PBXGroup;
 			children = (
+				C4FEF683255BE83800C78FA1 /* TableViewCells */,
 				C4FB2D5F2553E316005A16F4 /* UsersListViewController.swift */,
 				C4FB2D6A2553FC22005A16F4 /* UserTableViewDataSource.swift */,
-				C4FB2D6C2553FC6F005A16F4 /* UserTableViewCell.swift */,
 			);
 			path = "User list";
 			sourceTree = "<group>";
@@ -280,9 +290,22 @@
 				C43E8452255454A400B82018 /* CodingUserInfoKey+Util.swift */,
 				C447C9292556DCF700E2E780 /* UITableView+Util.swift */,
 				C44DEFDD2559E73E003E328F /* UIImageView+Cache+Util.swift */,
-				C44DEFDF2559EC98003E328F /* UIImageView+Invert+Util.swift */,
+				C44DEFDF2559EC98003E328F /* UIImage+Invert+Util.swift */,
+				C4E6D2A5255BF0270037834B /* UIView+Util.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C4FEF683255BE83800C78FA1 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				C4FB2D6C2553FC6F005A16F4 /* StandardTableViewCell.swift */,
+				C4FEF686255BEAF100C78FA1 /* InvertedTableViewCell.swift */,
+				C4FEF688255BEAFC00C78FA1 /* NoteTableViewCell.swift */,
+				C4E6D2A7255C32380037834B /* GenericTableViewCell.swift */,
+				C4958508255D707B006DE80F /* LoadingTableViewCell.swift */,
+			);
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -457,21 +480,26 @@
 			files = (
 				C43E8453255454A400B82018 /* CodingUserInfoKey+Util.swift in Sources */,
 				C4FB2D412553E1EA005A16F4 /* App.xcdatamodeld in Sources */,
+				C4958509255D707B006DE80F /* LoadingTableViewCell.swift in Sources */,
 				C447C930255726F700E2E780 /* Network+Connectivity+Util.swift in Sources */,
-				C4FB2D6D2553FC6F005A16F4 /* UserTableViewCell.swift in Sources */,
+				C4FB2D6D2553FC6F005A16F4 /* StandardTableViewCell.swift in Sources */,
 				C4FB2D662553E435005A16F4 /* APIService.swift in Sources */,
+				C4FEF689255BEAFC00C78FA1 /* NoteTableViewCell.swift in Sources */,
 				C4FB2D642553E3C3005A16F4 /* UserViewModel.swift in Sources */,
-				C44DEFE02559EC98003E328F /* UIImageView+Invert+Util.swift in Sources */,
+				C44DEFE02559EC98003E328F /* UIImage+Invert+Util.swift in Sources */,
 				C447C92D2557166200E2E780 /* User+CoreDataClass.swift in Sources */,
+				C4E6D2A6255BF0270037834B /* UIView+Util.swift in Sources */,
 				C43E845F2554780700B82018 /* UserStorageManager.swift in Sources */,
 				C4FB2D602553E316005A16F4 /* UsersListViewController.swift in Sources */,
 				C4FB2D372553E1EA005A16F4 /* AppDelegate.swift in Sources */,
+				C4E6D2A8255C32380037834B /* GenericTableViewCell.swift in Sources */,
 				C4FB2D6B2553FC22005A16F4 /* UserTableViewDataSource.swift in Sources */,
 				C43E84502554415000B82018 /* CoreDataStorage.swift in Sources */,
 				C447C92E2557166200E2E780 /* User+CoreDataProperties.swift in Sources */,
 				C447C92A2556DCF700E2E780 /* UITableView+Util.swift in Sources */,
 				C44DEFDE2559E73E003E328F /* UIImageView+Cache+Util.swift in Sources */,
 				C4FB2D70255405B7005A16F4 /* BetterLogs.swift in Sources */,
+				C4FEF687255BEAF100C78FA1 /* InvertedTableViewCell.swift in Sources */,
 				C4FB2D392553E1EA005A16F4 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

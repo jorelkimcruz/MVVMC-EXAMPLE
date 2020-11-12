@@ -9,16 +9,11 @@
 import Foundation
 import CoreData
 
-
 extension User {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<User> {
-        return NSFetchRequest<User>(entityName: "User")
-    }
 
     @NSManaged public var id: Int16
     @NSManaged public var login: String?
     @NSManaged public var avatarURL: URL?
     @NSManaged public var url: URL?
-
+    @NSManaged public var note: String?
 }

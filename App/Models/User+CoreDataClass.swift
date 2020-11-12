@@ -14,6 +14,8 @@ typealias UserList = [User]
 
 public class User: NSManagedObject, Codable {
     static let identifier = "User"
+    
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         do {

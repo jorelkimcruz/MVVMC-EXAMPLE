@@ -8,37 +8,37 @@
 
 import UIKit
 
-
 extension UIImageView {
     
-    func downloadAndCacheImage(url: URL, invert: Bool) {
-        self.image = nil
+    func downloadAndCache(url: URL, downloadComplete: @escaping (UIImage) -> ()) {
         
-        if let cachedImage = imageDataCache.object(forKey: url.absoluteString as AnyObject) {
-            self.image = cachedImage
-            return
-        }
-        
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
-            if let `error` = error {
-                log_error(message: error.localizedDescription)
-                return
-            } else {
-                log_success(message: response.debugDescription)
-                DispatchQueue.global(qos: .utility).sync {
-                    if let `data` = data, let downloadedImage = UIImage(data: data) {
-                        imageDataCache.setObject(invert ? downloadedImage.inverted() : downloadedImage, forKey: url.absoluteString as AnyObject)
-                    }
-                }
+        DispatchQueue.global(qos: .background).sync {
+            if let cachedImage = imageDataCache.object(forKey: url.absoluteString as AnyObject) {
                 DispatchQueue.main.async {
-                    if let cachedImage = imageDataCache.object(forKey: url.absoluteString as AnyObject) {
-                        self.image = cachedImage
-                        return
-                    }
+                    downloadComplete(cachedImage)
                 }
+                return
             }
-        }.resume()
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                
+                if let `error` = error {
+                    log_error(message: error.localizedDescription)
+                    return
+                } else {
+                    log_success(message: response.debugDescription)
+                    
+                    DispatchQueue.global(qos: .utility).sync {
+                        if let `data` = data, let downloadedImage = UIImage(data: data) {
+                            imageDataCache.setObject(downloadedImage, forKey: url.absoluteString as AnyObject)
+                            DispatchQueue.main.async {
+                                downloadComplete(downloadedImage)
+                            }
+                        }
+                    }
+                    
+                }
+            }.resume()
+        }
     }
+    
 }

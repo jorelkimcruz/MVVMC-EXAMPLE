@@ -8,37 +8,56 @@
 import Foundation
 import UIKit
 
+typealias StandardCell = TableCellConfigurator<StandardTableViewCell, User>
+typealias NoteCell = TableCellConfigurator<NoteTableViewCell, User>
+typealias InvertedCell = TableCellConfigurator<InvertedTableViewCell, User>
 
-class UserTableViewDataSource<CELL : UITableViewCell,T> : NSObject, UITableViewDataSource {
+
+class UserTableViewDataSource : NSObject, UITableViewDataSource {
     
-    private var cellIdentifier : String!
-    private var items : [T]!
-    var configureCell : (CELL, T, Int) -> () = {_,_,_ in }
+    private var cells : [CellConfigurator] = []
     
+    init(items : [User]) {
+        for item in items.enumerated() {
+            if item.offset % 4 == 3 {
+                if let itemNote = item.element.note, !itemNote.isEmpty {
+                    cells.append(NoteCell(item: item.element, inverted: true))
+                } else {
+                    cells.append(InvertedCell(item: item.element))
+                }
+            } else {
+                if let itemNote = item.element.note, !itemNote.isEmpty {
+                    cells.append(NoteCell(item: item.element))
+                } else {
+                    cells.append(StandardCell(item: item.element))
+                }
+            }
+        }
+    }
     
-    init(cellIdentifier : String, items : [T], configureCell : @escaping (CELL, T, Int) -> ()) {
-        self.cellIdentifier = cellIdentifier
-        self.items =  items
-        self.configureCell = configureCell
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if items.count > 0 {
-            tableView.restore()
-        } else {
-            tableView.setEmptyView()
-        }
-        return items.count
+        cells.count > 0 ? tableView.restore() :  tableView.setEmptyView()
+        return section == 1 ? 1 : cells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let item = cells[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: type(of: item).reuseId)!
+            item.configure(cell: cell)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: LoadingTableViewCell.identifier(), for: indexPath) as! LoadingTableViewCell
+            cell.loadingIndicator.startAnimating()
+            return cell
+        }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CELL
-        
-        let item = self.items[indexPath.row]
-        self.configureCell(cell, item, indexPath.row)
-        return cell
     }
+    
 }
 
 

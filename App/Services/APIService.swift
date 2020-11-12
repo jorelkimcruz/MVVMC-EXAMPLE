@@ -17,6 +17,7 @@ class APIService: APIServiceProtocol {
     
     func getUserList(page: Int, completion : @escaping (Result<Data, Error>) -> ()){
         
+        log_success(message:   "\(sourcesURL)/users?since=\(page)")
         URLSession.shared.dataTask(with: URL(string:  "\(sourcesURL)/users?since=\(page)")!) { (data, urlResponse, error) in
             if let data = data {
                 completion(.success(data))

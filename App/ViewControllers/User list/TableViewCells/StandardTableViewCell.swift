@@ -6,10 +6,10 @@
 //  Copyright © 2020 JORELCRUZ. All rights reserved.
 //
 
+
 import UIKit
 
-class UserTableViewCell: UITableViewCell {
-    static let identifier = "UserTableViewCell"
+class StandardTableViewCell: UITableViewCell, ConfigurableCell {
     
     lazy var avatarImageView: UIImageView = {
         // UIIMageView Settings
@@ -45,12 +45,48 @@ class UserTableViewCell: UITableViewCell {
     private lazy var labelStackView: UIStackView = {
         // Set StackView Settings
         let stackView = UIStackView()
+        stackView.isOpaque = true
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
     }()
+    
+    lazy var horizontalStackView: UIStackView = {
+        // Set StackView Settings
+        let stackView = UIStackView()
+        stackView.isOpaque = true
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
+    
+    lazy var noteImageView: UIImageView = {
+        // UIIMageView Settings
+        let imageView = UIImageView()
+        imageView.isOpaque = true
+        imageView.isHidden = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "NoteIcon")!
+        return imageView
+    }()
+    
+    //MARK: CONFIGURE
+    func configure(data user: User, inverted: Bool) {
+        guard let avatar = user.avatarURL, let login = user.login, let detail = user.url else {
+            return
+        }
+        // Remove image on deque
+        self.avatarImageView.image = nil
+        avatarImageView.downloadAndCache(url: avatar) { (image) in
+            self.avatarImageView.image = image
+        }
+        usernameLabel.text = login
+        detailsLabel.text = detail.absoluteString
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -71,10 +107,11 @@ class UserTableViewCell: UITableViewCell {
         
         // MARK: Add ui to contentView
         contentView.addSubview(avatarImageView)
-        contentView.addSubview(labelStackView)
+        contentView.addSubview(horizontalStackView)
         labelStackView.addArrangedSubview(usernameLabel)
         labelStackView.addArrangedSubview(detailsLabel)
-        
+        horizontalStackView.addArrangedSubview(labelStackView)
+        horizontalStackView.addArrangedSubview(noteImageView)
         // MARK: Activate custom constraints
         NSLayoutConstraint.activate([
             // Avatar
@@ -84,8 +121,13 @@ class UserTableViewCell: UITableViewCell {
             avatarImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0),
             
             // label stackView
-            labelStackView.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 8),
-            labelStackView.heightAnchor.constraint(equalTo: avatarImageView.heightAnchor, constant: 0)
+            //            labelStackView.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 8),
+            //            labelStackView.heightAnchor.constraint(equalTo: avatarImageView.heightAnchor, constant: 0),
+            
+            // Horizontal stackView
+            horizontalStackView.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 8),
+            horizontalStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -4),
+            horizontalStackView.heightAnchor.constraint(equalTo: avatarImageView.heightAnchor, constant: 8)
             
         ])
         
