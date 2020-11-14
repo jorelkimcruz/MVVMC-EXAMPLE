@@ -52,14 +52,19 @@ class UsersListViewController: UIViewController, Storyboarded {
         
     }
     
+    var retry = 0
     private func getData(withState state: ConnectionState) {
-        DispatchQueue.global(qos: .background).async {
-            if state == .isActive {
+        if state == .isActive {
+            BackOff.execute(on: DispatchQueue.global(qos: .background), retry: retry) {
                 self.userViewModel.requestUserListFromServer()
-            } else {
+            }
+        } else {
+            
+            DispatchQueue.global(qos: .background).async {
                 self.userViewModel.getUserListFromPersistence()
             }
         }
+        
     }
     
     func renderList() {
@@ -68,8 +73,14 @@ class UsersListViewController: UIViewController, Storyboarded {
 }
 
 extension UsersListViewController: UserViewModelDelegate {
-    
+    func errorServerRequest() {
+        // add retry number for exponential backoff
+        retry += 1
+    }
     func userDataDidChange() {
+        // reset retry
+        retry = 0
+        
         self.userViewModel.syncUserListToPersistence(data: self.userViewModel.userData)
     }
     
@@ -120,7 +131,7 @@ extension UsersListViewController: UIScrollViewDelegate {
             if !isLoading {
                 isLoading = true
                 DispatchQueue.global().async {
-                    // Fake background loading task for 1 seconds
+                    // Fake background loading task for 2 seconds
                     sleep(2)
                     // Download more data here
                     self.userViewModel.requestUserListFromServer()

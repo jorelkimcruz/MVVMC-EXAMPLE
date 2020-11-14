@@ -33,6 +33,7 @@
 		C4E02C13255D7908008D7779 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E02C12255D7908008D7779 /* Coordinator.swift */; };
 		C4E6D2A6255BF0270037834B /* UIView+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E6D2A5255BF0270037834B /* UIView+Util.swift */; };
 		C4E6D2A8255C32380037834B /* GenericTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E6D2A7255C32380037834B /* GenericTableViewCell.swift */; };
+		C4E93E93255F5B8F00F4FCE2 /* BackOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E93E92255F5B8F00F4FCE2 /* BackOff.swift */; };
 		C4FB2D372553E1EA005A16F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D362553E1EA005A16F4 /* AppDelegate.swift */; };
 		C4FB2D392553E1EA005A16F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2D382553E1EA005A16F4 /* SceneDelegate.swift */; };
 		C4FB2D3E2553E1EA005A16F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4FB2D3C2553E1EA005A16F4 /* Main.storyboard */; };
@@ -89,6 +90,7 @@
 		C4E02C12255D7908008D7779 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		C4E6D2A5255BF0270037834B /* UIView+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Util.swift"; sourceTree = "<group>"; };
 		C4E6D2A7255C32380037834B /* GenericTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableViewCell.swift; sourceTree = "<group>"; };
+		C4E93E92255F5B8F00F4FCE2 /* BackOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackOff.swift; sourceTree = "<group>"; };
 		C4FB2D332553E1EA005A16F4 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4FB2D362553E1EA005A16F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4FB2D382553E1EA005A16F4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			children = (
 				C4FB2D6F255405B7005A16F4 /* BetterLogs.swift */,
 				C4E02C0D255D7866008D7779 /* Storyboard.swift */,
+				C4E93E92255F5B8F00F4FCE2 /* BackOff.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				C447C92A2556DCF700E2E780 /* UITableView+Util.swift in Sources */,
 				C44DEFDE2559E73E003E328F /* UIImageView+Cache+Util.swift in Sources */,
 				C40FB057255DAA100085A71D /* ProfileViewModel.swift in Sources */,
+				C4E93E93255F5B8F00F4FCE2 /* BackOff.swift in Sources */,
 				C4E02C0E255D7866008D7779 /* Storyboard.swift in Sources */,
 				C4FB2D70255405B7005A16F4 /* BetterLogs.swift in Sources */,
 				C4FEF687255BEAF100C78FA1 /* InvertedTableViewCell.swift in Sources */,

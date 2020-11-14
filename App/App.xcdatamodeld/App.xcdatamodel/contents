@@ -11,12 +11,6 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="URI"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="id"/>
-                <constraint value="login"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <elements>
         <element name="User" positionX="-104.89453125" positionY="-15.28515625" width="128" height="193"/>

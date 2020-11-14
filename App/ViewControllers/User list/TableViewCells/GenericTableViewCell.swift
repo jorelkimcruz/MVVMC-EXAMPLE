@@ -34,6 +34,6 @@ class TableCellConfigurator<CellType: ConfigurableCell, DataType>: CellConfigura
     }
 
     func configure(cell: UIView) {
-        (cell as! CellType).configure(data: item, inverted: false)
+        (cell as! CellType).configure(data: item, inverted: inverted)
     }
 }

@@ -13,6 +13,7 @@ protocol UserViewModelDelegate: class {
     func userDataDidChange()
     func syncToPersistenDidFinish()
     func syncFromPersistenceDidFinish()
+    func errorServerRequest()
 }
 
 class UserListViewModel {
@@ -50,6 +51,7 @@ class UserListViewModel {
                 self.userData = data
                 self.currentPage += 1
             case .failure(let error):
+                self.delegate?.errorServerRequest()
                 log_error(message: error.localizedDescription)
                 break
             }
