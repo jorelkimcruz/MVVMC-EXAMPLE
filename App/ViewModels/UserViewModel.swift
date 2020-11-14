@@ -15,7 +15,7 @@ protocol UserViewModelDelegate: class {
     func syncFromPersistenceDidFinish()
 }
 
-class UserViewModel {
+class UserListViewModel {
     
     weak var delegate: UserViewModelDelegate?
     private var apiService : APIServiceProtocol!
@@ -66,7 +66,7 @@ class UserViewModel {
         
         do {
             let _ = try jsonDecoder.decode(UserList.self, from: data)
-            usermanagerStorage.save(with: managedObjectContext)
+            try usermanagerStorage.save(with: managedObjectContext)
             self.delegate?.syncToPersistenDidFinish()
         } catch {
             log_error(message: error.localizedDescription)

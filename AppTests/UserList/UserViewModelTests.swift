@@ -15,7 +15,7 @@ import CoreData
 class UserViewModelTestsSpec: QuickSpec {
     override func spec() {
         describe("Given that the app opens") {
-            var viewModel: UserViewModel!
+            var viewModel: UserListViewModel!
             var serviceMock: APIServiceMock!
             var coreStorageMock: CoreDataStorage!
             var userStorageManager: UserStorageManger!
@@ -26,7 +26,7 @@ class UserViewModelTestsSpec: QuickSpec {
                     coreStorageMock = CoreDataStorage()
                     serviceMock = APIServiceMock(response: .success, responseFile: "UserList", errorResponseFile: nil)
                     userStorageManager = UserStorageManger(container: coreStorageMock.persistentContainer)
-                    viewModel = UserViewModel(service: serviceMock, persistence: userStorageManager)
+                    viewModel = UserListViewModel(service: serviceMock, persistence: userStorageManager)
                 }
                 
                 it("should successfully get users data") {
@@ -47,7 +47,7 @@ class UserViewModelTestsSpec: QuickSpec {
                     coreStorageMock = CoreDataStorage()
                     serviceMock = APIServiceMock(response: .systemError, responseFile: nil, errorResponseFile: nil, errorCode: 423)
                     userStorageManager = UserStorageManger(container: coreStorageMock.persistentContainer)
-                    viewModel = UserViewModel(service: serviceMock, persistence: userStorageManager)
+                    viewModel = UserListViewModel(service: serviceMock, persistence: userStorageManager)
                 }
                 
                 it("should not update user list") {

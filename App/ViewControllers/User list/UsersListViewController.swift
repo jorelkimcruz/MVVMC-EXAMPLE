@@ -9,10 +9,14 @@
 import Foundation
 import UIKit
 import Network
-
-class UsersListViewController: UIViewController {
+protocol UsersListViewControllerListener: class {
+    func didSelect(user: User)
+}
+class UsersListViewController: UIViewController, Storyboarded {
     
-    private var userViewModel: UserViewModel!
+    weak var delegate: UsersListViewControllerListener?
+    
+    var userViewModel: UserListViewModel!
     private var dataSource : UserTableViewDataSource!
     @IBOutlet var userTableView: UITableView!
     let connectivityMonitor = NWPathMonitor()
@@ -32,7 +36,7 @@ class UsersListViewController: UIViewController {
         userTableView.register(StandardTableViewCell.self, forCellReuseIdentifier: StandardTableViewCell.identifier())
         
         // MARK: Initialize view model
-        self.userViewModel = UserViewModel(service: APIService(), persistence: UserStorageManger(container: CoreDataStorage.shared.persistentContainer))
+        self.userViewModel = UserListViewModel(service: APIService(), persistence: UserStorageManger(container: CoreDataStorage.shared.persistentContainer))
         self.userViewModel.delegate = self
         
         // Get data on first load
@@ -88,6 +92,11 @@ extension UsersListViewController: UserViewModelDelegate {
 }
 
 extension UsersListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didSelect(user: userViewModel.userList[indexPath.row])
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return  78
     }
@@ -104,11 +113,10 @@ extension UsersListViewController: UITableViewDelegate {
 
 extension UsersListViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        
-        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading {
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+        if distanceFromBottom < height {
             if !isLoading {
                 isLoading = true
                 DispatchQueue.global().async {

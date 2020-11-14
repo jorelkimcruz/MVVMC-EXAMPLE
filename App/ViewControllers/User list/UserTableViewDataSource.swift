@@ -27,6 +27,7 @@ class UserTableViewDataSource : NSObject, UITableViewDataSource {
                 }
             } else {
                 if let itemNote = item.element.note, !itemNote.isEmpty {
+                    log_success(message: "NOTE CELL")
                     cells.append(NoteCell(item: item.element))
                 } else {
                     cells.append(StandardCell(item: item.element))

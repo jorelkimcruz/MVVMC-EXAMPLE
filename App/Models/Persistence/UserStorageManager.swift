@@ -29,20 +29,20 @@ class UserStorageManger {
     
     
     // MARK: - Core Data Saving support
-    func save(with context: NSManagedObjectContext) {
+    func save(with context: NSManagedObjectContext) throws {
         if context.hasChanges {
             do {
                 try context.save()
             } catch {
                 let nserror = error as NSError
                 if nserror.code == 133021 {
-                    log_error(message: nserror.localizedDescription)
+                    throw nserror
                 } else {
                     fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
                 }
             }
         } else {
-            log_Warning(message: "no chan ges")
+            log_Warning(message: "no changes")
         }
     }
     

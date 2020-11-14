@@ -25,8 +25,6 @@ extension UIImageView {
                     log_error(message: error.localizedDescription)
                     return
                 } else {
-                    log_success(message: response.debugDescription)
-                    
                     DispatchQueue.global(qos: .utility).sync {
                         if let `data` = data, let downloadedImage = UIImage(data: data) {
                             imageDataCache.setObject(downloadedImage, forKey: url.absoluteString as AnyObject)

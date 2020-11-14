@@ -81,7 +81,10 @@ class StandardTableViewCell: UITableViewCell, ConfigurableCell {
         }
         // Remove image on deque
         self.avatarImageView.image = nil
-        avatarImageView.downloadAndCache(url: avatar) { (image) in
+        avatarImageView.downloadAndCache(url: avatar) { [weak self] (image) in
+            guard let `self` = self else {
+                return
+            }
             self.avatarImageView.image = image
         }
         usernameLabel.text = login

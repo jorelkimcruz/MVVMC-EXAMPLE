@@ -18,7 +18,10 @@ class InvertedTableViewCell: StandardTableViewCell {
         }
         // Remove image on deque
         self.avatarImageView.image = nil
-        self.avatarImageView.downloadAndCache(url: avatar) { (image) in
+        self.avatarImageView.downloadAndCache(url: avatar) { [weak self] (image) in
+            guard let `self` = self else {
+                return
+            }
             DispatchQueue.global(qos: .default).async {
                 // Create thread for each CIFilter
                 if let originalCIImage = CIImage(image: image), let inverted = originalCIImage.invertFilter() {
