@@ -22,7 +22,7 @@ class UserListViewModel {
     private var apiService : APIServiceProtocol!
     private var usermanagerStorage: UserStorageManger!
     
-    private(set) var currentPage: Int = 0
+    private(set) var nextPage: Int = 0
     
     private(set) var userList : UserList! {
         didSet {
@@ -42,14 +42,13 @@ class UserListViewModel {
     }
     
     func requestUserListFromServer() {
-        self.apiService.getUserList(page: currentPage) { [weak self] (resultData) in
+        self.apiService.getUserList(page: nextPage) { [weak self] (resultData) in
             guard let `self` = self else {
                 return
             }
             switch (resultData) {
             case .success(let data):
                 self.userData = data
-                self.currentPage += 1
             case .failure(let error):
                 self.delegate?.errorServerRequest()
                 log_error(message: error.localizedDescription)
@@ -80,9 +79,14 @@ class UserListViewModel {
         let context = usermanagerStorage.mainContext
         let userFetchRequest = NSFetchRequest<User>(entityName: User.identifier)
         userFetchRequest.resultType = .managedObjectResultType
+        let sort = NSSortDescriptor(key: "id", ascending: true)
+        userFetchRequest.sortDescriptors = [sort]
         
         do {
             self.userList = try context.fetch(userFetchRequest)
+            if let user = userList.last {
+                nextPage = Int(user.id)
+            }
         }
         catch _ {
             fatalError("Failed to retrieve managed object result")

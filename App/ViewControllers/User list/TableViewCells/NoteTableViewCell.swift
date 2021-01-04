@@ -12,6 +12,9 @@ class NoteTableViewCell: StandardTableViewCell {
     
     //MARK: CONFIGURE
     override func configure(data user: User, inverted: Bool = false) {
+        
+        // Remove image on deque
+        self.avatarImageView.image = nil
         noteImageView.isHidden = false
         guard let avatar = user.avatarURL, let login = user.login, let detail = user.url else {
             return
@@ -19,8 +22,6 @@ class NoteTableViewCell: StandardTableViewCell {
         usernameLabel.text = login
         detailsLabel.text = detail.absoluteString
         
-        // Remove image on deque
-        self.avatarImageView.image = nil
         self.avatarImageView.downloadAndCache(url: avatar) { [weak self] (image) in
             guard let `self` = self else {
                 return

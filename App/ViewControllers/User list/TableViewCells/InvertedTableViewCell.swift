@@ -13,11 +13,11 @@ class InvertedTableViewCell: StandardTableViewCell {
     
     //MARK: CONFIGURE
     override func configure(data user: User, inverted: Bool) {
+        // Remove image on deque
+        self.avatarImageView.image = nil
         guard let avatar = user.avatarURL, let login = user.login, let detail = user.url else {
             return
         }
-        // Remove image on deque
-        self.avatarImageView.image = nil
         self.avatarImageView.downloadAndCache(url: avatar) { [weak self] (image) in
             guard let `self` = self else {
                 return

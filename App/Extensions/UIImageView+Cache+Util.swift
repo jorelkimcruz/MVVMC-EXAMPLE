@@ -11,8 +11,8 @@ import UIKit
 extension UIImageView {
     
     func downloadAndCache(url: URL, downloadComplete: @escaping (UIImage) -> ()) {
-        
-        DispatchQueue.global(qos: .background).sync {
+        let serialQueue = DispatchQueue(label: "image.download.queue", qos: .background)
+        serialQueue.sync {
             if let cachedImage = imageDataCache.object(forKey: url.absoluteString as AnyObject) {
                 DispatchQueue.main.async {
                     downloadComplete(cachedImage)

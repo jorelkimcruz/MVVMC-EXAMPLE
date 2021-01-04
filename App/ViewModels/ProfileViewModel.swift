@@ -44,7 +44,11 @@ class ProfileViewModel {
             if let profile = fetchResults.first {
                 profile.note = notes
                 log_success(message: "Updated: \(selectedUser.id)")
-                try context.save()
+                let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+                moc.parent = context
+                moc.perform {
+                    do { try moc.save() } catch { log_error(message: error.localizedDescription) }
+                }
                 self.delegate?.userDidUpdate(user: profile)
             } else {
                 log_error(message: "NO FETCH \(fetchResults)")
@@ -54,31 +58,6 @@ class ProfileViewModel {
             fatalError("Failed to retrieve managed object result")
         }
         
-    }
-    
-    private func update(user: User) {
-        let context = usermanagerStorage.mainContext
-        let userFetchRequest = NSFetchRequest<User>(entityName: User.identifier)
-        userFetchRequest.predicate = NSPredicate(format: "id == %d", selectedUser.id)
-        userFetchRequest.resultType = .managedObjectResultType
-        
-        do {
-            let fetchResults = try context.fetch(userFetchRequest)
-            if let profile = fetchResults.first {
-                profile.update(with: user)
-                do {
-                    try context.save()
-                } catch {
-                    log_error(message: "error save: \(error.localizedDescription)")
-                }
-                self.delegate?.userDidUpdate(user: profile)
-            } else {
-                log_error(message: "ERROR FETCH: \(fetchResults)")
-            }
-        }
-        catch {
-            fatalError("Failed to retrieve managed object result")
-        }
     }
     
     func userExist() -> User? {
@@ -134,6 +113,32 @@ class ProfileViewModel {
             update(user: user)
         } catch let error {
             log_error(message: "Error decode: \(error.localizedDescription)")
+        }
+    }
+    
+    private func update(user: User) {
+        let context = usermanagerStorage.mainContext
+        
+        let userFetchRequest = NSFetchRequest<User>(entityName: User.identifier)
+        userFetchRequest.predicate = NSPredicate(format: "id == %d", selectedUser.id)
+        userFetchRequest.resultType = .managedObjectResultType
+        
+        do {
+            let fetchResults = try context.fetch(userFetchRequest)
+            if let profile = fetchResults.first {
+                profile.update(with: user)
+                do {
+                    try context.save()
+                } catch {
+                    log_error(message: "error save: \(error.localizedDescription)")
+                }
+                self.delegate?.userDidUpdate(user: profile)
+            } else {
+                log_error(message: "ERROR FETCH: \(fetchResults)")
+            }
+        }
+        catch {
+            fatalError("Failed to retrieve managed object result")
         }
     }
     

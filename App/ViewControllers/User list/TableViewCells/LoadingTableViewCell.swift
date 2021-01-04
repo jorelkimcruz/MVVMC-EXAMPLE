@@ -13,7 +13,7 @@ class LoadingTableViewCell: UITableViewCell {
         // UIActivityIndicatorView Settings
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.color = .black
+        indicator.color = self.traitCollection.userInterfaceStyle == .dark ? .white : .black
         return indicator
     }()
     
@@ -22,7 +22,7 @@ class LoadingTableViewCell: UITableViewCell {
         backgroundColor = .clear
         
         // add corner radius on `contentView`
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .clear
         
         // MARK: Add ui to contentView
         contentView.addSubview(loadingIndicator)
@@ -34,6 +34,7 @@ class LoadingTableViewCell: UITableViewCell {
             loadingIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0),
             
         ])
+        
     }
     
     override func layoutSubviews() {

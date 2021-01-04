@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Network
 protocol UserProfileViewControllerListener: class {
-  func userDidUpdate(user: User)
+    func userDidUpdate(user: User)
 }
 class UserProfileViewController: UIViewController, Storyboarded {
     weak var delegate: UserProfileViewControllerListener?
@@ -30,8 +30,10 @@ class UserProfileViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textView.layer.borderColor = UIColor.black.cgColor
+        hideKeyboardWhenTappedAround()
+        textView.layer.borderColor = self.traitCollection.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
         textView.layer.borderWidth = 0.5
+        
         self.profileViewModel.delegate = self
         
         // Get data on first load
@@ -52,16 +54,27 @@ class UserProfileViewController: UIViewController, Storyboarded {
     }
     
     private func getData(withState state: ConnectionState) {
-        DispatchQueue.global(qos: .background).async {
-            if state == .isActive {
-                self.profileViewModel.requestProfile()
-            } else {
+        if state == .isActive {
+            self.profileViewModel.requestProfile()
+        } else {
+            DispatchQueue.global(qos: .background).async {
                 self.profileViewModel.getUserProfileFromPersistence()
             }
         }
+        
+    }
+    /**
+     Enables automatic keyboard dismissal when tapping outside a responder
+     */
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
     
-    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 extension UserProfileViewController: ProfileViewModelDelegate {
@@ -72,9 +85,9 @@ extension UserProfileViewController: ProfileViewModelDelegate {
             self.followersLabel.text = "Followers: \(user.followers)"
             self.followingLabel.text = "Following: \(user.following)"
             if let name = user.name,
-                let company = user.company,
-                let blog = user.blog,
-                let notes = user.note {
+               let company = user.company,
+               let blog = user.blog,
+               let notes = user.note {
                 self.name.text = "Name: \(name)"
                 self.company.text = "Company: \(blog)"
                 self.blogUrl.text = "Blog: \(company)"
